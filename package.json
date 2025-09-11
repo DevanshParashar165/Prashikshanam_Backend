@@ -1,0 +1,22 @@
+{
+  "name": "prashikshanam-backend",
+  "version": "1.0.0",
+  "description": "Backend for Prashikshanam – a PM Internship Recommendation System for SIH, offering APIs for internship matching, user management, and analytics.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node src/index.js"
+  },
+  "keywords": [
+    "SIH",
+    "Backend",
+    "Prashikshanam",
+    "API",
+    "Creation"
+  ],
+  "author": "Devansh Parashar",
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "3.6.2"
+  }
+}
