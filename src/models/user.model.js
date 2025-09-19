@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 
 const userSchema = new mongoose.Schema(
     {
-        name: {
+        fullname: {
             type: String,
             required: true,
             trim: true,
@@ -15,11 +15,20 @@ const userSchema = new mongoose.Schema(
             unique: true,
             lowercase: true,
         },
+        username: {
+            type: String,
+            required: true,
+            unique: true,
+        },
         password: {
             type: String,
             required: true,
-            minlength: 6,
             select: false,
+        },
+        phoneNo : {
+            type : String,
+            required : true,
+            minlength:10
         },
         role: {
             type: String,
@@ -120,10 +129,17 @@ const userSchema = new mongoose.Schema(
 );
 
 userSchema.pre('save', async function (next) {
-    if (!this.isModified("password")) return;
-    this.password = await bcrypt.hash(this.password, 10)
-    next();
-})
+    try {
+        if (!this.isModified("password")) return;
+        if (typeof this.password !== "string") {
+            this.password = String(this.password);
+        }
+        this.password = await bcrypt.hash(this.password, 10);
+        next();
+    } catch (err) {
+        next(err);
+    }
+});
 
 userSchema.methods.isPasswordCorrect = async function (password) {
     return await bcrypt.compare(password, this.password)
@@ -143,7 +159,7 @@ userSchema.methods.generateAccessToken = function () {
     )
 }
 
-userSchema.method.generateRefreshToken = function () {
+userSchema.methods.generateRefreshToken = function () {
     return jwt.sign({
         _id: this._id,
         email: this.email,
