@@ -23,12 +23,11 @@ const userSchema = new mongoose.Schema(
         password: {
             type: String,
             required: true,
-            select: false,
         },
-        phoneNo : {
-            type : String,
-            required : true,
-            minlength:10
+        phoneNo: {
+            type: String,
+            required: true,
+            minlength: 10
         },
         role: {
             type: String,
@@ -88,6 +87,9 @@ const userSchema = new mongoose.Schema(
         },
         portfolio: {
             type: String,
+        },
+        refreshToken: {
+            type: String
         },
         savedInternships: [
             {
