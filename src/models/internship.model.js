@@ -3,18 +3,21 @@ import mongoose from "mongoose";
 const internshipSchema = new mongoose.Schema(
   {
     // Basic Info
-    title: {
+    internship_title: {
       type: String,
       required: true, // e.g., Frontend Developer Intern
       trim: true,
     },
-    company: {
+    company_name: {
       name: { type: String, required: true },
       website: { type: String },
       location: { type: String, required: true }, // e.g., Bangalore, Remote
       logo: { type: String }, // Cloudinary or company logo URL
     },
-
+    location : {
+      type : String,
+      required : true,
+    },
     // Internship Details
     description: {
       type: String,
@@ -24,12 +27,12 @@ const internshipSchema = new mongoose.Schema(
     requirements: [String], // e.g., "React.js", "Node.js", "MongoDB"
 
     // Skills for Recommendation Matching
-    requiredSkills: [
+    skills: [
       {
         type: String, // e.g., Python, Machine Learning
       },
     ],
-    sector: {
+    interests: {
       type: String, // e.g., Web Development, AI/ML
       required: true,
     },
@@ -39,9 +42,7 @@ const internshipSchema = new mongoose.Schema(
       type: String, // e.g., "3 Months"
     },
     stipend: {
-      amount: { type: Number }, // e.g., 10000
-      type: { type: String, enum: ["Paid", "Unpaid", "Performance-based"] },
-      currency: { type: String, default: "INR" },
+       type: Number  // e.g., $10000
     },
 
     // Application Details

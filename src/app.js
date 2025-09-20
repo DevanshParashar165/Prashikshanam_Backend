@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors"
 import cookieParser from "cookie-parser"
 import userRouter from "./routes/user.route.js";
+import recommendRouter from "./routes/recommendation.route.js";
 
 const app = express()
 
@@ -18,6 +19,7 @@ app.use(express.static("public"))
 app.use(cookieParser())
 
 app.use("/api/v1/users", userRouter)
+app.use("/api/v1/recommend", recommendRouter)
 
 
 app.use((err, req, res, next) => {
