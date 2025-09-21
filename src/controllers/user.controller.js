@@ -126,4 +126,24 @@ const logoutUser = asyncHandler(async(req,res)=>{
     )
 })
 
-export {registerUser,loginUser,logoutUser}
+const getUserDetails = asyncHandler(async(req,res)=>{
+    const userId = req.user._id
+    if(!userId){
+        throw new ApiError(400,"UserId not Found")
+    }
+    const user = await User.findById(userId)
+                           .select("-password -refreshToken")
+    
+    if(!user){
+        throw new ApiError(400,"User not found");
+    }
+
+    return res.status(200)
+              .json(
+                new ApiResponse(200,{user},"User details fetched succesfully!!!")
+              )
+
+})
+
+
+export {registerUser,loginUser,logoutUser,getUserDetails}
