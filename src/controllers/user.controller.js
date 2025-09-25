@@ -2,6 +2,7 @@ import { User } from "../models/user.model.js";
 import { ApiError } from "../utilities/apiError.js";
 import { ApiResponse} from "../utilities/apiResponse.js";
 import { asyncHandler } from "../utilities/asyncHandler.js";
+import cookie from "cookie-parser";
 
 const generateAccessAndRefreshTokens = async (userId) => {
     try {
@@ -45,8 +46,9 @@ const registerUser = asyncHandler(async(req,res)=>{
 
     const options = {
         httpOnly : true,
-        secure : true,
-        sameSite : "None"
+        secure : false,
+        sameSite : "None",
+        path: "/" 
     }
      return res.status(200)
               .cookie("accessToken",accessToken,options)
@@ -59,7 +61,6 @@ const registerUser = asyncHandler(async(req,res)=>{
 const loginUser = asyncHandler(async (req, res) => {
     //req body ->data
     const { username, email, password } = req.body
-    console.log((username || email)," : Login successfully!!!!!")
     if (!(username || email)) {
         throw new ApiError(400, "Username or email is required")
     }
@@ -88,9 +89,10 @@ const loginUser = asyncHandler(async (req, res) => {
 
     const options = {
         httpOnly : true,
-        secure : true,
-        sameSite : "None",
-        maxAge: 7 * 24 * 60 * 60 * 1000
+        secure : false,
+        sameSite: "None",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        path: "/" 
     }
 
     return res.status(200)
@@ -114,7 +116,7 @@ const logoutUser = asyncHandler(async(req,res)=>{
     })
     const options = {
         httpOnly : true,
-        secure : true,
+        secure : false,
         sameSite : "None",
         path : "/"
     }
@@ -144,6 +146,7 @@ const getUserDetails = asyncHandler(async(req,res)=>{
               )
 
 })
+
 
 
 export {registerUser,loginUser,logoutUser,getUserDetails}
